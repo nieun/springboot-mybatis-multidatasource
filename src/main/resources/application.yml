@@ -1,0 +1,45 @@
+spring:
+  autoconfigure:
+    exclude: org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
+
+datasource: # https://github.com/brettwooldridge/HikariCP
+  master:
+    jdbc-url: jdbc:h2:mem:master
+    username:
+    password:
+    maximum-pool-size: 10
+  slave:
+    jdbcUrl: jdbc:h2:mem:slave
+    username:
+    password:
+    maximum-pool-size: 10
+#  mysql:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    jdbc-url: jdbc:mysql://my.mysql-host.com:3306/db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+#    username: admin
+#    password: 1234
+#    connection-timeout: 10s
+#    connection-test-query: SELECT 1
+#    pool-name: band-db-pool
+#    maximum-pool-size: 10
+#    minimum-idle: 2
+#    data-source:
+#      prep-stmt-cache-size: 250
+#      prep-stmt-cache-sql-limit: 2048
+#      cache-prep-stmts: true
+
+mybatis: # http://mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/
+  master:
+    type-aliases-package: com.example.mybatis.datasource.master.model
+    type-handlers-package: com.example.mybatis.datasource.master.typehandler
+    configuration:
+      map-underscore-to-camel-case: true
+      default-fetch-size: 100
+      default-statement-timeout: 30
+  slave:
+    type-aliases-package: com.example.mybatis.datasource.slave.model
+    type-handlers-package: com.example.mybatis.datasource.slave.typehandler
+    configuration:
+      map-underscore-to-camel-case: true
+      default-fetch-size: 100
+      default-statement-timeout: 30
